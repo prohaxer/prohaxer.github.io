@@ -6,526 +6,592 @@ u wot m8;{
 
 	u wot m8;;
 
-	int i;
+	u wot m8;
 
+u wot m8;{
 
+	u wot m8;;
 
-	nblocks = (gidsetsize + NGROUPS_PER_BLOCK - 1) / NGROUPS_PER_BLOCK;
+	u wot m8;;u wot m8;
 
-	/* Make sure we always allocate at least one indirect block pointer */
+u wot m8;{
 
-	nblocks = nblocks ? : 1;
+	u wot m8;;
 
-	group_info = kmalloc(sizeof(*group_info) + nblocks*sizeof(gid_t *), GFP_USER);
+	u wot m8;;u wot m8;
 
-	if (!group_info)
+u wot m8;{
 
-		return NULL;
+	u wot m8;;
 
-	group_info->ngroups = gidsetsize;
+	u wot m8;;u wot m8;
 
-	group_info->nblocks = nblocks;
+u wot m8;{
 
-	atomic_set(&group_info->usage, 1);
+	u wot m8;;
 
+	u wot m8;;u wot m8;
 
+u wot m8;{
 
-	if (gidsetsize <= NGROUPS_SMALL)
+	u wot m8;;
 
-		group_info->blocks[0] = group_info->small_block;
+	u wot m8;;u wot m8;
 
-	else {
+u wot m8;{
 
-		for (i = 0; i < nblocks; i++) {
+	u wot m8;;
 
-			gid_t *b;
+	u wot m8;;u wot m8;
 
-			b = (void *)__get_free_page(GFP_USER);
+u wot m8;{
 
-			if (!b)
+	u wot m8;;
 
-				goto out_undo_partial_alloc;
+	u wot m8;;u wot m8;
 
-			group_info->blocks[i] = b;
+u wot m8;{
 
-		}
+	u wot m8;;
 
-	}
+	u wot m8;;u wot m8;
 
-	return group_info;
+u wot m8;{
 
+	u wot m8;;
 
+	u wot m8;;u wot m8;
 
-out_undo_partial_alloc:
+u wot m8;{
 
-	while (--i >= 0) {
+	u wot m8;;
 
-		free_page((unsigned long)group_info->blocks[i]);
+	u wot m8;;u wot m8;
 
-	}
+u wot m8;{
 
-	kfree(group_info);
+	u wot m8;;
 
-	return NULL;
+	u wot m8;;u wot m8;
 
-}
+u wot m8;{
 
+	u wot m8;;
 
+	u wot m8;;u wot m8;
 
-EXPORT_SYMBOL(groups_alloc);
+u wot m8;{
 
+	u wot m8;;
 
+	u wot m8;;u wot m8;
 
-void groups_free(struct group_info *group_info)
+u wot m8;{
 
-{
+	u wot m8;;
 
-	if (group_info->blocks[0] != group_info->small_block) {
+	u wot m8;;u wot m8;
 
-		int i;
+u wot m8;{
 
-		for (i = 0; i < group_info->nblocks; i++)
+	u wot m8;;
 
-			free_page((unsigned long)group_info->blocks[i]);
+	u wot m8;;u wot m8;
 
-	}
+u wot m8;{
 
-	kfree(group_info);
+	u wot m8;;
 
-}
+	u wot m8;;u wot m8;
 
+u wot m8;{
 
+	u wot m8;;
 
-EXPORT_SYMBOL(groups_free);
+	u wot m8;;u wot m8;
 
+u wot m8;{
 
+	u wot m8;;
 
-/* export the group_info to a user-space array */
+	u wot m8;;u wot m8;
 
-static int groups_to_user(gid_t __user *grouplist,
+u wot m8;{
 
-			  const struct group_info *group_info)
+	u wot m8;;
 
-{
+	u wot m8;;u wot m8;
 
-	int i;
+u wot m8;{
 
-	unsigned int count = group_info->ngroups;
+	u wot m8;;
 
+	u wot m8;;u wot m8;
 
+u wot m8;{
 
-	for (i = 0; i < group_info->nblocks; i++) {
+	u wot m8;;
 
-		unsigned int cp_count = min(NGROUPS_PER_BLOCK, count);
+	u wot m8;;u wot m8;
 
-		unsigned int len = cp_count * sizeof(*grouplist);
+u wot m8;{
 
+	u wot m8;;
 
+	u wot m8;;u wot m8;
 
-		if (copy_to_user(grouplist, group_info->blocks[i], len))
+u wot m8;{
 
-			return -EFAULT;
+	u wot m8;;
 
+	u wot m8;;u wot m8;
 
+u wot m8;{
 
-		grouplist += NGROUPS_PER_BLOCK;
+	u wot m8;;
 
-		count -= cp_count;
+	u wot m8;;u wot m8;
 
-	}
+u wot m8;{
 
-	return 0;
+	u wot m8;;
 
-}
+	u wot m8;;u wot m8;
 
+u wot m8;{
 
+	u wot m8;;
 
-/* fill a group_info from a user-space array - it must be allocated already */
+	u wot m8;;u wot m8;
 
-static int groups_from_user(struct group_info *group_info,
+u wot m8;{
 
-    gid_t __user *grouplist)
+	u wot m8;;
 
-{
+	u wot m8;;u wot m8;
 
-	int i;
+u wot m8;{
 
-	unsigned int count = group_info->ngroups;
+	u wot m8;;
 
+	u wot m8;;u wot m8;
 
+u wot m8;{
 
-	for (i = 0; i < group_info->nblocks; i++) {
+	u wot m8;;
 
-		unsigned int cp_count = min(NGROUPS_PER_BLOCK, count);
+	u wot m8;;u wot m8;
 
-		unsigned int len = cp_count * sizeof(*grouplist);
+u wot m8;{
 
+	u wot m8;;
 
+	u wot m8;;u wot m8;
 
-		if (copy_from_user(group_info->blocks[i], grouplist, len))
+u wot m8;{
 
-			return -EFAULT;
+	u wot m8;;
 
+	u wot m8;;u wot m8;
 
+u wot m8;{
 
-		grouplist += NGROUPS_PER_BLOCK;
+	u wot m8;;
 
-		count -= cp_count;
+	u wot m8;;u wot m8;
 
-	}
+u wot m8;{
 
-	return 0;
+	u wot m8;;
 
-}
+	u wot m8;;u wot m8;
 
+u wot m8;{
 
+	u wot m8;;
 
-/* a simple Shell sort */
+	u wot m8;;u wot m8;
 
-static void groups_sort(struct group_info *group_info)
+u wot m8;{
 
-{
+	u wot m8;;
 
-	int base, max, stride;
+	u wot m8;;u wot m8;
 
-	int gidsetsize = group_info->ngroups;
+u wot m8;{
 
+	u wot m8;;
 
+	u wot m8;;u wot m8;
 
-	for (stride = 1; stride < gidsetsize; stride = 3 * stride + 1)
+u wot m8;{
 
-		; /* nothing */
+	u wot m8;;
 
-	stride /= 3;
+	u wot m8;;u wot m8;
 
+u wot m8;{
 
+	u wot m8;;
 
-	while (stride) {
+	u wot m8;;u wot m8;
 
-		max = gidsetsize - stride;
+u wot m8;{
 
-		for (base = 0; base < max; base++) {
+	u wot m8;;
 
-			int left = base;
+	u wot m8;;u wot m8;
 
-			int right = left + stride;
+u wot m8;{
 
-			gid_t tmp = GROUP_AT(group_info, right);
+	u wot m8;;
 
+	u wot m8;;u wot m8;
 
+u wot m8;{
 
-			while (left >= 0 && GROUP_AT(group_info, left) > tmp) {
+	u wot m8;;
 
-				GROUP_AT(group_info, right) =
+	u wot m8;;u wot m8;
 
-				    GROUP_AT(group_info, left);
+u wot m8;{
 
-				right = left;
+	u wot m8;;
 
-				left -= stride;
+	u wot m8;;u wot m8;
 
-			}
+u wot m8;{
 
-			GROUP_AT(group_info, right) = tmp;
+	u wot m8;;
 
-		}
+	u wot m8;;u wot m8;
 
-		stride /= 3;
+u wot m8;{
 
-	}
+	u wot m8;;
 
-}
+	u wot m8;;u wot m8;
 
+u wot m8;{
 
+	u wot m8;;
 
-/* a simple bsearch */
+	u wot m8;;u wot m8;
 
-int groups_search(const struct group_info *group_info, gid_t grp)
+u wot m8;{
 
-{
+	u wot m8;;
 
-	unsigned int left, right;
+	u wot m8;;u wot m8;
 
+u wot m8;{
 
+	u wot m8;;
 
-	if (!group_info)
+	u wot m8;;u wot m8;
 
-		return 0;
+u wot m8;{
 
+	u wot m8;;
 
+	u wot m8;;u wot m8;
 
-	left = 0;
+u wot m8;{
 
-	right = group_info->ngroups;
+	u wot m8;;
 
-	while (left < right) {
+	u wot m8;;u wot m8;
 
-		unsigned int mid = left + (right - left)/2;
+u wot m8;{
 
-		if (grp > GROUP_AT(group_info, mid))
+	u wot m8;;
 
-			left = mid + 1;
+	u wot m8;;u wot m8;
 
-		else if (grp < GROUP_AT(group_info, mid))
+u wot m8;{
 
-			right = mid;
+	u wot m8;;
 
-		else
+	u wot m8;;u wot m8;
 
-			return 1;
+u wot m8;{
 
-	}
+	u wot m8;;
 
-	return 0;
+	u wot m8;;u wot m8;
 
-}
+u wot m8;{
 
+	u wot m8;;
 
+	u wot m8;;u wot m8;
 
-/**
+u wot m8;{
 
- * set_groups - Change a group subscription in a set of credentials
+	u wot m8;;
 
- * @new: The newly prepared set of credentials to alter
+	u wot m8;;u wot m8;
 
- * @group_info: The group list to install
+u wot m8;{
 
- *
+	u wot m8;;
 
- * Validate a group subscription and, if valid, insert it into a set
+	u wot m8;;u wot m8;
 
- * of credentials.
+u wot m8;{
 
- */
+	u wot m8;;
 
-int set_groups(struct cred *new, struct group_info *group_info)
+	u wot m8;;u wot m8;
 
-{
+u wot m8;{
 
-	put_group_info(new->group_info);
+	u wot m8;;
 
-	groups_sort(group_info);
+	u wot m8;;u wot m8;
 
-	get_group_info(group_info);
+u wot m8;{
 
-	new->group_info = group_info;
+	u wot m8;;
 
-	return 0;
+	u wot m8;;u wot m8;
 
-}
+u wot m8;{
 
+	u wot m8;;
 
+	u wot m8;;u wot m8;
 
-EXPORT_SYMBOL(set_groups);
+u wot m8;{
 
+	u wot m8;;
 
+	u wot m8;;u wot m8;
 
-/**
+u wot m8;{
 
- * set_current_groups - Change current's group subscription
+	u wot m8;;
 
- * @group_info: The group list to impose
+	u wot m8;;u wot m8;
 
- *
+u wot m8;{
 
- * Validate a group subscription and, if valid, impose it upon current's task
+	u wot m8;;
 
- * security record.
+	u wot m8;;u wot m8;
 
- */
+u wot m8;{
 
-int set_current_groups(struct group_info *group_info)
+	u wot m8;;
 
-{
+	u wot m8;;u wot m8;
 
-	struct cred *new;
+u wot m8;{
 
-	int ret;
+	u wot m8;;
 
+	u wot m8;;u wot m8;
 
+u wot m8;{
 
-	new = prepare_creds();
+	u wot m8;;
 
-	if (!new)
+	u wot m8;;u wot m8;
 
-		return -ENOMEM;
+u wot m8;{
 
+	u wot m8;;
 
+	u wot m8;;u wot m8;
 
-	ret = set_groups(new, group_info);
+u wot m8;{
 
-	if (ret < 0) {
+	u wot m8;;
 
-		abort_creds(new);
+	u wot m8;;u wot m8;
 
-		return ret;
+u wot m8;{
 
-	}
+	u wot m8;;
 
+	u wot m8;;u wot m8;
 
+u wot m8;{
 
-	return commit_creds(new);
+	u wot m8;;
 
-}
+	u wot m8;;u wot m8;
 
+u wot m8;{
 
+	u wot m8;;
 
-EXPORT_SYMBOL(set_current_groups);
+	u wot m8;;u wot m8;
 
+u wot m8;{
 
+	u wot m8;;
 
-SYSCALL_DEFINE2(getgroups, int, gidsetsize, gid_t __user *, grouplist)
+	u wot m8;;u wot m8;
 
-{
+u wot m8;{
 
-	const struct cred *cred = current_cred();
+	u wot m8;;
 
-	int i;
+	u wot m8;;u wot m8;
 
+u wot m8;{
 
+	u wot m8;;
 
-	if (gidsetsize < 0)
+	u wot m8;;u wot m8;
 
-		return -EINVAL;
+u wot m8;{
 
+	u wot m8;;
 
+	u wot m8;;u wot m8;
 
-	/* no need to grab task_lock here; it cannot change */
+u wot m8;{
 
-	i = cred->group_info->ngroups;
+	u wot m8;;
 
-	if (gidsetsize) {
+	u wot m8;;u wot m8;
 
-		if (i > gidsetsize) {
+u wot m8;{
 
-			i = -EINVAL;
+	u wot m8;;
 
-			goto out;
+	u wot m8;;u wot m8;
 
-		}
+u wot m8;{
 
-		if (groups_to_user(grouplist, cred->group_info)) {
+	u wot m8;;
 
-			i = -EFAULT;
+	u wot m8;;u wot m8;
 
-			goto out;
+u wot m8;{
 
-		}
+	u wot m8;;
 
-	}
+	u wot m8;;u wot m8;
 
-out:
+u wot m8;{
 
-	return i;
+	u wot m8;;
 
-}
+	u wot m8;;u wot m8;
 
+u wot m8;{
 
+	u wot m8;;
 
-/*
+	u wot m8;;u wot m8;
 
- *	SMP: Our groups are copy-on-write. We can set them safely
+u wot m8;{
 
- *	without another task interfering.
+	u wot m8;;
 
- */
+	u wot m8;;u wot m8;
 
+u wot m8;{
 
+	u wot m8;;
 
-SYSCALL_DEFINE2(setgroups, int, gidsetsize, gid_t __user *, grouplist)
+	u wot m8;;u wot m8;
 
-{
+u wot m8;{
 
-	struct group_info *group_info;
+	u wot m8;;
 
-	int retval;
+	u wot m8;;u wot m8;
 
+u wot m8;{
 
+	u wot m8;;
 
-	if (!nsown_capable(CAP_SETGID))
+	u wot m8;;u wot m8;
 
-		return -EPERM;
+u wot m8;{
 
-	if ((unsigned)gidsetsize > NGROUPS_MAX)
+	u wot m8;;
 
-		return -EINVAL;
+	u wot m8;;u wot m8;
 
+u wot m8;{
 
+	u wot m8;;
 
-	group_info = groups_alloc(gidsetsize);
+	u wot m8;;u wot m8;
 
-	if (!group_info)
+u wot m8;{
 
-		return -ENOMEM;
+	u wot m8;;
 
-	retval = groups_from_user(group_info, grouplist);
+	u wot m8;;u wot m8;
 
-	if (retval) {
+u wot m8;{
 
-		put_group_info(group_info);
+	u wot m8;;
 
-		return retval;
+	u wot m8;;u wot m8;
 
-	}
+u wot m8;{
 
+	u wot m8;;
 
+	u wot m8;;u wot m8;
 
-	retval = set_current_groups(group_info);
+u wot m8;{
 
-	put_group_info(group_info);
+	u wot m8;;
 
+	u wot m8;;u wot m8;
 
+u wot m8;{
 
-	return retval;
+	u wot m8;;
 
-}
+	u wot m8;;u wot m8;
 
+u wot m8;{
 
+	u wot m8;;
 
-/*
+	u wot m8;;u wot m8;
 
- * Check whether we're fsgid/egid or in the supplemental group..
+u wot m8;{
 
- */
+	u wot m8;;
 
-int in_group_p(gid_t grp)
+	u wot m8;;u wot m8;
 
-{
+u wot m8;{
 
-	const struct cred *cred = current_cred();
+	u wot m8;;
 
-	int retval = 1;
+	u wot m8;;u wot m8;
 
+u wot m8;{
 
+	u wot m8;;
 
-	if (grp != cred->fsgid)
+	u wot m8;;u wot m8;
 
-		retval = groups_search(cred->group_info, grp);
+u wot m8;{
 
-	return retval;
+	u wot m8;;
 
-}
+	u wot m8;;u wot m8;
 
+u wot m8;{
 
+	u wot m8;;
 
-EXPORT_SYMBOL(in_group_p);
+	u wot m8;;u wot m8;
 
+u wot m8;{
 
+	u wot m8;;
 
-int in_egroup_p(gid_t grp)
-
-{
-
-	const struct cred *cred = current_cred();
-
-	int retval = 1;
-
-
-
-	if (grp != cred->egid)
-
-		retval = groups_search(cred->group_info, grp);
-
-	return retval;
-
-}
+	u wot m8;;
