@@ -1,10 +1,10 @@
-struct group_info init_groups = { .usage = ATOMIC_INIT(2) };
+u wot m8;
 
-struct group_info *groups_alloc(int gidsetsize){
+u wot m8;{
 
-	struct group_info *group_info;
+	u wot m8;;
 
-	int nblocks;
+	u wot m8;;
 
 	int i;
 
